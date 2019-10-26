@@ -1,0 +1,6 @@
+{
+    "customer_id":1,
+    "formats":[".csv"],
+    "number_files":5,
+    "data_sizes":64
+}

@@ -1,7 +1,7 @@
 version: '3'
 
 services: 
- cas1: 
+ cas2: 
     container_name: cas2
     image: cassandra:latest
     volumes:
@@ -13,4 +13,14 @@ services:
       - CASSANDRA_CLUSTER_NAME=MyCluster
       - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
       - CASSANDRA_DC=datacenter1
-
+ server:
+    build: /home/clement/WKS/AALTO/BigData/assignment-2-784795/data/server/
+    command: python ./server.py
+    ports:
+      - 1234:1234
+ client:
+    build: /home/clement/WKS/AALTO/BigData/assignment-2-784795/data/client/
+    command: python ./client.py
+    network_mode: host
+    depends_on:
+      - server
