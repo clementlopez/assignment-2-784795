@@ -1,0 +1,6 @@
+multiprocess
+matplotlib
+pandas
+cassandra-driver
+argparse
+uuid
