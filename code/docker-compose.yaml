@@ -2,10 +2,10 @@ version: '3'
 
 services: 
  cas2: 
-    container_name: cas2
+    container_name: cassan2
     image: cassandra:latest
     volumes:
-      - /home/clement/WKS/AALTO/BigData/assignment-2-784795/data/cassandra/node1
+      - ./../data/cassandra/node1:/var/lib/cassandra
     ports:
       - 9042:9042
     environment:
@@ -13,14 +13,21 @@ services:
       - CASSANDRA_CLUSTER_NAME=MyCluster
       - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
       - CASSANDRA_DC=datacenter1
+    networks:
+      - assignment
  server:
-    build: /home/clement/WKS/AALTO/BigData/assignment-2-784795/data/server/
-    command: python ./server.py
+    container_name: server
+    image: python:3.6-stretch
+    command: /bin/bash -c "ls"
+    volumes:
+      - ./server:/var/lib/server
     ports:
-      - 1234:1234
- client:
-    build: /home/clement/WKS/AALTO/BigData/assignment-2-784795/data/client/
-    command: python ./client.py
-    network_mode: host
-    depends_on:
-      - server
+      - 9043:9043
+    tty: true
+    networks:
+      - assignment
+
+networks:
+  assignment: {}
+
+    
