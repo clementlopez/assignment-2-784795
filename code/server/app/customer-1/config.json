@@ -1,5 +1,5 @@
 {
     "formats":[".csv"],
-    "number_files":5,
-    "data_sizes":64
+    "number_files":10,
+    "data_sizes":4096
 }
