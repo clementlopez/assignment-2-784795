@@ -20,7 +20,7 @@ if __name__ == "__main__":
     session = cluster.connect()
 
     #Create Keyspace Customer-1
-    session.execute("""CREATE KEYSPACE IF NOT EXISTS Customer-1
+    session.execute("""CREATE KEYSPACE IF NOT EXISTS Customer1
         WITH REPLICATION = {
             'class' : 'SimpleStrategy',
             'replication_factor' : 1
@@ -28,7 +28,7 @@ if __name__ == "__main__":
     """)
 
     #Create Keyspace Customer-1
-    session.execute("""CREATE KEYSPACE IF NOT EXISTS Customer-2
+    session.execute("""CREATE KEYSPACE IF NOT EXISTS Customer2
         WITH REPLICATION = {
             'class' : 'SimpleStrategy',
             'replication_factor' : 1
@@ -36,9 +36,9 @@ if __name__ == "__main__":
     """)
 
     #Enter in the keyspace Customer-1
-    session.execute("USE Customer-1;")
+    session.execute("USE Customer1;")
 
-    #Create Tables
+    #Create Table
     session.execute("""
     CREATE TABLE Application
     (
@@ -60,17 +60,26 @@ if __name__ == "__main__":
     """)
     
     #Enter in the keyspace Customer-2
-    session.execute("USE Customer-2;")
+    session.execute("USE Customer2;")
 
+    #Create Tables
     session.execute("""
-    CREATE TABLE Review
+    CREATE TABLE Application
     (
         id UUID PRIMARY KEY,
-        app_name text,
-        translated_review text,
-        sentiment text,
-        sentiment_polarity float,
-        sentiment_subjectivity float
+        name text,
+        category text,
+        rating float,
+        reviews int,
+        size text,
+        installs text,
+        free Boolean,
+        price_dollar float,
+        content_rating text, 
+        genres text,
+        last_update date,
+        current_ver text,
+        android_ver text
     );
     """)
 

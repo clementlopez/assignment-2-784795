@@ -21,11 +21,23 @@ services:
       context: ./server
       dockerfile: deployments/app/Dockerfile
     volumes:
-      - ./server:/var/lib/server
+      - ./../data/server:/server
+    tty: true
     ports:
       - 5000:5000
     networks:
       - assignment
+ mqtt:
+  container_name: mysimbdp-databroker
+    image: eclipse-mosquitto:latest
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./../data/opt/conf/mqtt/config:/mosquitto/config
+      - ./../data/opt/conf/mqtt/data:/mosquitto/data
+      - ./../data/opt/conf/mqtt/log:/mosquitto/log 
 
 networks:
   assignment: {}
