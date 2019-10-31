@@ -15,6 +15,8 @@ The architecture of this part is composed of 3 pieces:
 * A first server on which the client files will be sent, which we will basically call Server for the rest of the report
 * A second server, a Cassandra server, which is the database in which the data will be stored, which we will basically call Cassandra for the rest of the report
 
+![Architecture](architecturePart1.jpg)
+
 ## FetchData
 
 The role of this component is to move the data from the client-input-directory to staging destination.
