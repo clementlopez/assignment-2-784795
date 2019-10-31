@@ -166,3 +166,17 @@ I also compare the ingestion time of a single file with all our data compare to 
 ```
 
 Which are quite similar, the time saving could be achieved by implementing the multi-threaded management of the dataingestclient.
+
+# Part 2 : Stream ingestion
+
+## Stream ingest design
+
+Unlike Batch ingestion, Stream ingestion involves no grouping at all, it is a continuous flow of data.
+In our project we will use a message broker for streaming ingest.
+For this part we will use a publisher-subscriber pattern : the customer will send the data to a particular topic and the Server (consumer of the data) will listen on the same topic.
+
+## MQTT with Mosquitto
+
+Mosquitto which is an open-source broker for MQTT protocol. I will use eclipse-mosquitto's docker image.
+On port 1883 we can find TCP connections and on the port 9001 is for websocket.
+
