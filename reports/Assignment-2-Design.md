@@ -29,7 +29,7 @@ From there, the script sends a GET request to the Server to recover the informat
 For every files in the client-input-directory the fetchdata component proceeds to check the client's configuration constraints.
 As soon as a file validates the constraints it is sent to the server.
 
-#### Constraints into configuration file
+### Constraints into configuration file
 
 I choose to use a JSON file in order to group the configuration constraints.
 * Formats lists all file formats allowed for upload.
@@ -38,15 +38,15 @@ I choose to use a JSON file in order to group the configuration constraints.
 
 An example code of a configuration constraints file is :
 
----json
+```json
 {
     "formats":[".csv"],
     "number_files":10,
     "data_sizes":4096
 }
----
+```
 
-#### Users authentification
+### Users authentification
 
 For client authentication, I just have a json file on my Server that is checked each time a GET request is sent.
 The password is encrypted on the Server.
@@ -62,6 +62,31 @@ My users.json file is:
 }
 ---
 
-## Batch Ingest Manager
+## Batch Ingest Manager & ClientBatchingestapp
+
+The batch ingest manager is responsible for calling/running the client's script whenever a file of that customer is upload into the Server.
+To do this, I used the watchdog library of python which allows to create Observer that I activate as soon as a file to be inserted is uploaded on the Server.
+Depending on the directory in which the file is uploaded (so depending on the client that has uploaded the file) it calls the corresponding dataingestclient script that was given by the client when creating his account (which was not processed in the implementation of this assignment but which is one of the first things I would like to implement in addition on this Server).
+
+Each dataingestclient connects to Cassandra and uses the customer's own Keyspace.
+Dataingestmanager allows us to collect logs on the speed of execution of the request as well as other information (size of the file, number of lines, the client concerned...).
+
+Logs follow this structure :
+```log
+
+2019-10-31 15:16:22 - Ingestion of the file: Data1000lines.csv for customer-1 - size: 128.7978515625 KB - 999 lines ingested in 0.8234226703643799 seconds
+2019-10-31 15:16:23 - Ingestion of the file: Data1000lines2.csv for customer-1 - size: 124.744140625 KB - 1000 lines ingested in 1.0246901512145996 seconds
+2019-10-31 15:16:24 - Ingestion of the file: Data1000linesae.csv for customer-1 - size: 118.5966796875 KB - 1000 lines ingested in 0.8117904663085938 seconds
+2019-10-31 15:16:25 - Ingestion of the file: Data1000linesai.csv for customer-1 - size: 111.1611328125 KB - 1000 lines ingested in 0.7847237586975098 seconds
+2019-10-31 15:18:00 - Ingestion of the file: Data1000linesaf.csv for customer-2 - size: 112.677734375 KB - 1000 lines ingested in 1.019026517868042 seconds
+2019-10-31 15:18:01 - Ingestion of the file: Data1000linesaj.csv for customer-2 - size: 111.49609375 KB - 1000 lines ingested in 0.9374134540557861 seconds
+2019-10-31 15:18:02 - Ingestion of the file: Data1000linesak.csv for customer-2 - size: 91.70703125 KB - 841 lines ingested in 0.6262474060058594 seconds
+
+```
+
+For now, all ```dataingestclient``` have to be written in python, however, in the future my ```dataingestmanager``` has to allow any language code for it.
+
+
+
 
 
