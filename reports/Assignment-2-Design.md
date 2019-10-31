@@ -55,12 +55,12 @@ For the moment I have configured my Server for 2 clients:
 ```customer-2 password-2```
 
 My users.json file is:
----json
+```json
 {
     "customer-1":"97d0eed887efa9702fcba83a64ace149ea7923227a8649cbb01dc825f09118c8e0f95c5a4a496dd30d35554ef3984c697d3f7541d517e6c6c642189a23b21accfb8b5e7aa6b4b12f6e824ddca05818ff82c4df4799e083ff1a4d7957743070f8",
     "customer-2":"aa9e53cc66ff8252bb6d29a5829bc83802f320169c25170660537c55aedb8047ae0197077815317a1cb0af21149173f4293575332da4e3d12680d9c3e3f1d2a9f88cee90cda580be1221ba73ca18a2ab7d4f4558d08532c4b5cbff21a7471797"
 }
----
+```
 
 ## Batch Ingest Manager & ClientBatchingestapp
 
@@ -86,7 +86,81 @@ Logs follow this structure :
 
 For now, all ```dataingestclient``` have to be written in python, however, in the future my ```dataingestmanager``` has to allow any language code for it.
 
+## Observations
 
+### Upload
 
+I created a script ```testBatchIngest.py``` that runs n times fetchdata for customer-1 and n times fetchdata for customer-2 :
 
+* When I launch ```fetchdata``` alone : ```python3 ./fetchdata.py -u customer-1 -p password-1``` I have the following results :
+```log
+2019-10-31 20:59:09 - The file Data1000linesaf.csv of 112.677734375 KB was succesfully uploaded in 0.07288789749145508 seconds
+2019-10-31 20:59:09 - The file Data1000linesaj.csv of 111.49609375 KB was succesfully uploaded in 0.07296013832092285 seconds
+2019-10-31 20:59:09 - The file Data1000linesak.csv of 91.70703125 KB was succesfully uploaded in 0.07683300971984863 seconds
+2019-10-31 20:59:09 - The file Data1000linesag.csv of 108.724609375 KB was succesfully uploaded in 0.06861734390258789 seconds
+2019-10-31 20:59:09 - The file Data1000linesah.csv of 109.1318359375 KB was succesfully uploaded in 0.07067394256591797 seconds
+2019-10-31 20:59:10 - The file Data1000linesad.csv of 134.732421875 KB was succesfully uploaded in 0.07169032096862793 seconds
+2019-10-31 20:59:10 - The file Data1000lines.csv of 128.7978515625 KB was succesfully uploaded in 0.06513452529907227 seconds
+2019-10-31 20:59:10 - The file Data1000lines2.csv of 124.744140625 KB was succesfully uploaded in 0.07544326782226562 seconds
+2019-10-31 20:59:10 - The file Data1000linesae.csv of 118.5966796875 KB was succesfully uploaded in 0.1078484058380127 seconds
+2019-10-31 20:59:10 - The file Data1000linesai.csv of 111.1611328125 KB was succesfully uploaded in 0.09715557098388672 seconds
+2019-10-31 20:59:10 - The maximum number of files on the server is reached - the file Data1000linesac.csv and the following ones will not be uploaded
+```
+Each upload lasts less than 0.1 second
 
+* When I launch ```python3 ./testBatchIngest.py``` with ```nbProcess = 2``` which mean I run fetchdata 2 times per customer (in multi-threads) I have the following results :
+
+```log
+2019-10-31 20:48:02 - The file Data1000linesaf_1.csv of 112 KB was succesfully uploaded in 0.121953964233 seconds
+2019-10-31 20:48:02 - The file Data1000linesae_0.csv of 118 KB was succesfully uploaded in 0.119879007339 seconds
+2019-10-31 20:48:03 - The file Data1000linesai_1.csv of 111 KB was succesfully uploaded in 0.136756181717 seconds
+2019-10-31 20:48:03 - The file Data1000lines2_0.csv of 124 KB was succesfully uploaded in 0.153769016266 seconds
+2019-10-31 20:48:03 - The file Data1000linesaj_1.csv of 111 KB was succesfully uploaded in 0.14465713501 seconds
+2019-10-31 20:48:03 - The file Data1000linesah_0.csv of 109 KB was succesfully uploaded in 0.151963949203 seconds
+2019-10-31 20:48:03 - The file Data1000linesag_1.csv of 108 KB was succesfully uploaded in 0.152611017227 seconds
+```
+
+* And with ```nbProcess = 10``` I have :
+```log
+2019-10-31 20:50:48 - The file Data1000linesah_0.csv of 109 KB was succesfully uploaded in 0.69601893425 seconds
+2019-10-31 20:50:48 - The file Data1000linesad_6.csv of 134 KB was succesfully uploaded in 0.694135904312 seconds
+2019-10-31 20:50:48 - The file Data1000linesak_7.csv of 91 KB was succesfully uploaded in 0.704891204834 seconds
+2019-10-31 20:50:48 - The file Data1000linesag_2.csv of 108 KB was succesfully uploaded in 0.70064997673 seconds
+2019-10-31 20:50:49 - The file Data1000linesaj_8.csv of 111 KB was succesfully uploaded in 0.712277889252 seconds
+2019-10-31 20:50:49 - The file Data1000linesak_9.csv of 91 KB was succesfully uploaded in 0.717664957047 seconds
+2019-10-31 20:50:49 - The file Data1000linesae_3.csv of 118 KB was succesfully uploaded in 0.719083070755 seconds
+2019-10-31 20:50:49 - The file Data1000linesak_5.csv of 91 KB was succesfully uploaded in 0.714491844177 seconds
+2019-10-31 20:50:49 - The file Data1000lines2_4.csv of 124 KB was succesfully uploaded in 0.680464982986 seconds
+2019-10-31 20:50:49 - The file Data1000linesag_1.csv of 108 KB was succesfully uploaded in 0.712291955948 seconds
+2019-10-31 20:50:49 - The file Data1000lines_0.csv of 128 KB was succesfully uploaded in 0.707845926285 seconds
+2019-10-31 20:50:49 - The file Data1000linesaj_6.csv of 111 KB was succesfully uploaded in 0.696511983871 seconds
+```
+
+The results are not far from being proportional to the number of scripts executed because the upload depends on the server which has not yet been implemented to receive a large number of upload requests at the same time.
+
+### Ingestion in DataBase
+
+I also compare the ingestion time of a single file with all our data compare to the same amount of data distributed into several files :
+
+* All data in one file :
+
+```log
+2019-10-31 19:19:17 - Ingestion of the file: cleanGoogleplaystore.csv for customer-2 - size: 1274.8701171875 KB - 10840 lines ingested in 8.664947986602783 seconds
+```
+
+* Several files :
+```
+2019-10-31 19:20:04 - Ingestion of the file: Data1000linesaf.csv for customer-2 - size: 112.677734375 KB - 1000 lines ingested in 1.2591001987457275 seconds
+2019-10-31 19:20:05 - Ingestion of the file: Data1000linesaj.csv for customer-2 - size: 111.49609375 KB - 1000 lines ingested in 0.8851094245910645 seconds
+2019-10-31 19:20:06 - Ingestion of the file: Data1000linesak.csv for customer-2 - size: 91.70703125 KB - 841 lines ingested in 0.808276891708374 seconds
+2019-10-31 19:20:07 - Ingestion of the file: Data1000linesag.csv for customer-2 - size: 108.724609375 KB - 1000 lines ingested in 0.8722560405731201 seconds
+2019-10-31 19:20:08 - Ingestion of the file: Data1000linesah.csv for customer-2 - size: 109.1318359375 KB - 1000 lines ingested in 0.8788414001464844 seconds
+2019-10-31 19:20:08 - Ingestion of the file: Data1000linesad.csv for customer-2 - size: 134.732421875 KB - 1000 lines ingested in 0.7908093929290771 seconds
+2019-10-31 19:20:09 - Ingestion of the file: Data1000lines.csv for customer-2 - size: 128.7978515625 KB - 999 lines ingested in 0.7683532238006592 seconds
+2019-10-31 19:20:10 - Ingestion of the file: Data1000lines2.csv for customer-2 - size: 124.744140625 KB - 1000 lines ingested in 0.7752983570098877 seconds
+2019-10-31 19:20:11 - Ingestion of the file: Data1000linesae.csv for customer-2 - size: 118.5966796875 KB - 1000 lines ingested in 0.744896411895752 seconds
+2019-10-31 19:20:11 - Ingestion of the file: Data1000linesai.csv for customer-2 - size: 111.1611328125 KB - 1000 lines ingested in 0.7285115718841553 seconds
+2019-10-31 19:20:12 - Ingestion of the file: Data1000linesac.csv for customer-2 - size: 123.3544921875 KB - 1000 lines ingested in 0.7197234630584717 seconds
+```
+
+Which are quite similar, the time saving could be achieved by implementing the multi-threaded management of the dataingestclient.
