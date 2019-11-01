@@ -27,18 +27,8 @@ def start_stream_watcher(customer):
     if launched_proc < 0:
         logging.error("Error in launching stream watcher for %s - Action not achieve" %(str(customer)))
     else:
-        logging.info("Successfully launched stream watcher for %s - Process id %s" %(str(customer), str(prog_pid)))
+        logging.info("Successfully launched stream watcher for %s - Process id %s" %(str(customer), str(launched_proc)))
     return launched_proc
-
-# def parse_arguments():
-#     parser = argparse.ArgumentParser(description='Init authentication')
-#     #customer-X
-#     parser.add_argument('-cust', type=str, help='You must provide a customer')
-#     #action
-#     parser.add_argument('-action', type=str, help='You must provide an action to perform [start or stop]')
-#     #action
-#     parser.add_argument('--pid', type=str, help='In case you want to stop a watcher - You must provide his id', default=0)
-#     return parser.parse_args()
 
 def validate_command(customer, action, proc_id):
     if action not in ["start", "stop"]:
