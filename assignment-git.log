@@ -1,2 +1,119 @@
-the content of this file should be the output of the log of your own git project for this assignment
-using git log command to export your git log
+commit 02cc15375e015db4985d295764c6e05a54c9faf4
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Fri Nov 1 12:53:36 2019 +0200
+
+    assignment finalized
+
+commit 408c2ea6c0748037d266ff0e21e76b9a81829889
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Fri Nov 1 11:21:01 2019 +0200
+
+    rename mysimbdp-streamingestmanager to mysimbdpstreamingestmanager for import in stream_report
+
+commit 73986db6ee293d97e492baf42904cf75e5a4eb4a
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Fri Nov 1 11:17:01 2019 +0200
+
+    part 3 questions 1 to 4 completed
+
+commit 57f30f8872ab7bc20ae773a21a711ed83a199f5e
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Fri Nov 1 10:16:11 2019 +0200
+
+    implementation of clientstreamingestapp
+
+commit a546ccd550181b92d3aa54b0733db8008af49709
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Fri Nov 1 09:55:59 2019 +0200
+
+    streamingestmanager implemented
+
+commit 3598f6fdea24623d45cd820653aa39b41297c30e
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Fri Nov 1 04:20:39 2019 +0200
+
+    question 2 from part 3 answered
+
+commit c4c252b474f6464f80352df4def8535688627b76
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Fri Nov 1 02:48:09 2019 +0200
+
+    implementation of ingestmessagestructure
+
+commit 1283e6f09b82575027bc2e8602d99da28bc41ba6
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Fri Nov 1 00:57:13 2019 +0200
+
+    docker config for mqtt
+
+commit b7e95f05933149657f95158226935121cafd261b
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Thu Oct 31 22:06:29 2019 +0200
+
+    architecture schema part 1
+
+commit e75643450113d9e43dfaa2ffda4db701b6744e6a
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Thu Oct 31 21:27:07 2019 +0200
+
+    tests and end of documentation part 1
+
+commit f1c991b88652ad252bf69048d1cfe79774195093
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Thu Oct 31 19:56:32 2019 +0200
+
+    documentation for databatchingestmanager
+
+commit 02be86add5dee666c9cc588bc1903c38e7e846b2
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Thu Oct 31 19:30:40 2019 +0200
+
+    fetchdata documentation
+
+commit c2531ae19b329062eb61eea2a28e9b23fbada028
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Thu Oct 31 17:54:36 2019 +0200
+
+    part 1 completed
+
+commit 218a379f0d6066aa7c95537d21c0c2c0be04eb4e
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Thu Oct 31 10:51:09 2019 +0200
+
+    structure of batchingestmanager
+
+commit d4cd7ced7fdf3133bf67a7165c14adfbe92f830c
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Wed Oct 30 22:02:35 2019 +0200
+
+    fetchdata is done
+
+commit 483d974e6b7ddd5bdceff2c07099614333fcf9c2
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Wed Oct 30 13:26:24 2019 +0200
+
+    fetchdata filters with constraints - no upload yet
+
+commit 5353369301c97cda6718ffaf2fc01647812cd8b9
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Wed Oct 30 12:34:06 2019 +0200
+
+    start of API implementation
+
+commit e79933d3d3719b433e8935cbf68822dd2ef24b4e
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Tue Oct 29 23:26:08 2019 +0200
+
+    modification of the structure of the second server
+
+commit a98a25fa5b081388accfbeb26174c01bf7dc7f38
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Sat Oct 26 17:08:03 2019 +0300
+
+    second server
+
+commit 8c60524c4ccbd91460764709baf08496334795a3
+Author: clement.lopez <clement.lopez@moonshotlabs.com>
+Date:   Sat Oct 26 16:13:59 2019 +0300
+
+    initial commit
