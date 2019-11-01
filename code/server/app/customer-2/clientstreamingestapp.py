@@ -2,8 +2,13 @@
 
 import paho.mqtt.client as mqtt
 import uuid
+import time
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
+
+avg_process_time = 0
+total_messages = 0
+time_of_last_report = 0
     
 
 def insert_in_cassandra(message_mqtt):
@@ -34,8 +39,30 @@ def insert_in_cassandra(message_mqtt):
     cluster.shutdown()
     return ret
 
+def report_data():
+    global avg_process_time, total_messages, time_of_last_report
+    if time.time() > (time_of_last_report + 10):
+        client = mqtt.Client()
+        client.connect("databroker")
+        client.publish("reportStream", ["customer-2", avg_process_time])
+        client.disconnect()
+        #reinit global variables
+        avg_process_time = 0
+        total_messages = 0
+        time_of_last_report = time.time()
+
+
 def on_message(client, userdata, msg):
-    insert_in_cassandra(str(msg.payload.decode()))
+    global avg_process_time, total_messages
+    start = time.time()
+    result = insert_in_cassandra(str(msg.payload.decode()))
+    end = time.time()
+    if result == 0:
+        avg_process_time = ((avg_process_time * total_messages)+(end-start))/(total_messages+1)
+        total_messages = total_messages + 1
+        report_data()
+    return result
+
 
 if __name__ == "__main__":
     client = mqtt.Client()

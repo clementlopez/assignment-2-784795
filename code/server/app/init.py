@@ -9,5 +9,6 @@ if __name__ == '__main__':
     processes = []
     processes.append('app.py')
     processes.append('mysimbdp-batchingestmanager.py')
-    pool = Pool(processes=2)
+    processes.append('stream-report.py')
+    pool = Pool(processes=3)
     pool.map(run_process, processes)

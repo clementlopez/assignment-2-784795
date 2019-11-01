@@ -6,7 +6,7 @@ import logging
 import subprocess
 import argparse
 
-logging.basicConfig(filename='../server/stream_logs.log',
+logging.basicConfig(filename='/var/log/stream_logs.log',
                         level=logging.DEBUG,
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
@@ -22,8 +22,8 @@ def stop_stream_watcher(prog_pid):
     return ret_val
 
 def start_stream_watcher(customer):
-    script_file = "./"+str(customer)+"/clientstreamingestapp.py"
-    launched_proc = subprocess.Popen("python", 100, script_file)
+    script_file = "/app/"+str(customer)+"/clientstreamingestapp.py"
+    launched_proc = subprocess.Popen("python3", 100, script_file)
     if launched_proc < 0:
         logging.error("Error in launching stream watcher for %s - Action not achieve" %(str(customer)))
     else:

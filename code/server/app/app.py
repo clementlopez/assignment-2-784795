@@ -5,6 +5,7 @@ from flask_restful import Resource, Api
 from json import dumps
 import json
 import hashlib, binascii, os
+from mysimbdpstreamingestmanager import run_manager
 app = Flask(__name__)
 api = Api(app)
 
@@ -45,7 +46,19 @@ class Customer_Profile(Resource):
             return jsonify(result)
         return "Wrong id and/or password"
 
+class Stream_start(Resource):
+    def get(self):
+        customer_id = request.args.get('id')
+        password = request.args.get('password')
+        with open('./users.json') as json_users:
+            authent = json.load(json_users)
+        if verify_password(authent[customer_id], password):
+            run_manager(customer_id, "start")
+            return "Stream start"
+        return "Wrong id and/or password"
+
 api.add_resource(Customer_Profile, '/customer') # Route_1
+api.add_resource(Stream_start, '/start') # Route_1
 
 if __name__ == '__main__':
     app.run(debug=False,host='0.0.0.0')

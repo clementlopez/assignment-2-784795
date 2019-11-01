@@ -204,6 +204,8 @@ def run_manager(customer, action, proc_id=0)
 * action : it can only be ```start``` or ```stop```
 * proc_id : used only if the action is ```stop``` It is the PID of the process to stop. There is a default value because we do not need to ask this argument if the action is ```start```
 
+I choose to allow ```start``` and ```stop``` methods to be invocated on-demand with a get request to ```localhost:5000/start?id=<CUSTOMERID>&password=<CUSTOMERPASSWORD>``` for ```start``` . Unfortunately I was not able to run it, I have an ```Internal Server Error``` when the authentification succeed, that I was not able to fix.
+
 ### Client Stream Ingest App
 
 It is a script provided by the customer, it should insert the received stream data into the cassandra database. ```streamingestmanager``` will invoke this script on-demand.
@@ -213,7 +215,16 @@ The script will receive stream data in the form imposed by ```mysimbdp``` which 
 'value1,value2,value3'
 ``` 
 
+### Reporting Stream
 
+I implemented a model that create/remove instances of ```clientstreamingestapp``` based on the reports of the running instances. For now, I implemented only a constraint about average ingestion time since the last report and only for 2 customers. Each running instances stream reports that ```stream_report.py``` receive. Reports are on the form :
+
+```json
+[
+<customerID>,
+<average ingestion time>
+]
+```
 
 # Part 3 : Integration and Extension
 
