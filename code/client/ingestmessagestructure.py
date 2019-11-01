@@ -2,6 +2,7 @@ import paho.mqtt.client as mqtt
 import logging
 import argparse
 import os
+import time
 
 
 def parse_arguments():
@@ -40,5 +41,6 @@ if __name__ == "__main__":
         data = csv_file.read()
         data_lines = data.splitlines()
         for lineToStream in data_lines:
+            time.sleep(0.05) #to remove
             stream_data(lineToStream, args.u)
 

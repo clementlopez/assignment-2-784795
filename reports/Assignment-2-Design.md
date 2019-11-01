@@ -186,21 +186,44 @@ One of the advantages of MQTT is that it allows automatic creation of topic when
 In this project I want each customer to have their unique topic on which he can publish to.
 So, with that, we do not need to add any information to identify the client to the server, we can send the data as we read it.
 However, since ```ingestmessagestructure``` is generic to all customers, it is not possible to give the names of the database fields directly. So the message must remain simple and easily decrypted, that's why I chose to be able to read data only from csv files and send an entire line per message.
+Client can run it with :
+```
+python ingestmessagestructure.py -u <user-ID> -file <csv_file to stream>
+```
 
 In order to receive these data, on the server ```clientingestapp``` is created by the ```mysimbdp-streamingestmanager```, it will subscribe to the same topic than the one where the corresponding customer sends data and it will insert the data in Cassandra.
 
+### Stream Ingest Manager
 
+This script allows us to create and destroy processes of ```clientingestapp``` on-demand.
+For that we have to run the ```run_manager``` function that has 3 arguments :
+```python
+def run_manager(customer, action, proc_id=0)
+```
+* customer : the customer id, mandatory to launch the right ```clientingestapp``` and it is also the topic name for the stream
+* action : it can only be ```start``` or ```stop```
+* proc_id : used only if the action is ```stop``` It is the PID of the process to stop. There is a default value because we do not need to ask this argument if the action is ```start```
 
+### Client Stream Ingest App
 
+It is a script provided by the customer, it should insert the received stream data into the cassandra database. ```streamingestmanager``` will invoke this script on-demand.
 
-
-
+The script will receive stream data in the form imposed by ```mysimbdp``` which is as a csv line, example:
+```
+'value1,value2,value3'
+``` 
 
 
 
 # Part 3 : Integration and Extension
 
 ## Q1
+
+```fetchdata``` combined to ```batchingestmanager``` on the Server : combination of 2 pipelines (file movement on the Server and Insertion in Cassandra).
+
+MQTT combined to ```streamingestmanager``` on the Server : better for small (and very quick) data ingestion.
+
+An example of architecture could be in a IoT environment : to use batch ingest for "old" data, already in a file and to use stream ingest for real-time sensor data.
 
 ## Q2
 
@@ -210,9 +233,13 @@ But since the size of a file does not necessarily match the end of a csv line, i
 
 ## Q3
 
-
+We need to respect the dataprivacy of the customer ! Scripts can contain critical data and sensitive information for the customer.
+However, we could need to know the code in order to import needed libraries for example.
+We also have to be vigilant about potential malicious code of the customer (maybe isolate the customer's process in a dedicated container could be a good idea if it does not make the execution time too much longer)
 
 ## Q4
+
+I think there is a way to see if the scripts of the clients are of a reasonably good quality in order to be accepted on the Server by reading the script binary file.
 
 ## Q5
 

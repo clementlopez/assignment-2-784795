@@ -58,15 +58,7 @@ def validate_command(customer, action, proc_id):
         return 1
     return 0
 
-#if __name__ == "__main__": #change to a function
 def run_manager(customer, action, proc_id=0):
-    # args = parse_arguments()
-    # if args.cust is None:
-    #     logging.debug("Customer unspecified when launching ingestmessagestructure")
-    #     exit(1)
-    # if args.action is None:
-    #     logging.debug("User unspecified when launching ingestmessagestructure")
-    #     exit(1)
     validation = validate_command(customer, action, proc_id)
     if validation == 1:
         logging.error("Unable to manage the command")

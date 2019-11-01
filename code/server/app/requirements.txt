@@ -7,3 +7,4 @@ cassandra-driver
 argparse
 uuid
 multiprocess
+paho-mqtt
