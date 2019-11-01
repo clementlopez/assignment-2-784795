@@ -28,7 +28,7 @@ services:
     networks:
       - assignment
  mqtt:
-    container_name: mysimbdp-databroker
+    container_name: databroker
     image: eclipse-mosquitto:latest
     restart: always
     ports:

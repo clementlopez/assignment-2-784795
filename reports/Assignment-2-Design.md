@@ -177,6 +177,14 @@ For this part we will use a publisher-subscriber pattern : the customer will sen
 
 ## MQTT with Mosquitto
 
-Mosquitto which is an open-source broker for MQTT protocol. I will use eclipse-mosquitto's docker image.
+Mosquitto which is an open-source broker for MQTT protocol (Message Queue Telemetry Transport). I will use eclipse-mosquitto's docker image.
 On port 1883 we can find TCP connections and on the port 9001 is for websocket.
 
+### Stream data ingestion
+
+One of the advantages of MQTT is that it allows automatic creation of topic when a publisher or a subscriber attached himself to the broker (when the broker is running)
+In this project I want each customer to have their unique topic on which he can publish to.
+So, with that, we do not need to add any information to identify the client to the server, we can send the data as we read it.
+However, since ```ingestmessagestructure``` is generic to all customers, it is not possible to give the names of the database fields directly. So the message must remain simple and easily decrypted, that's why I chose to be able to read data only from csv files and send an entire line per message.
+
+In order to receive these data, on the server ```clientingestapp``` is created by the ```mysimbdp-streamingestmanager```, it will subscribe to the same topic than the one where the corresponding customer sends data and it will insert the data in Cassandra.
