@@ -13,7 +13,7 @@ def insert_in_cassandra(message_mqtt):
     session = cluster.connect()
 
     #Enter in the keyspace
-    session.execute("USE Customer1;")
+    session.execute("USE Customer2;")
 
     #Insert in Cassandra
     row = message_mqtt.split(",")
@@ -40,6 +40,6 @@ def on_message(client, userdata, msg):
 if __name__ == "__main__":
     client = mqtt.Client()
     client.connect("databroker")
-    client.subscribe("customer-1")
+    client.subscribe("customer-2")
     client.on_message = on_message
     client.loop_forever()
