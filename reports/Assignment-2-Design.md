@@ -188,3 +188,31 @@ So, with that, we do not need to add any information to identify the client to t
 However, since ```ingestmessagestructure``` is generic to all customers, it is not possible to give the names of the database fields directly. So the message must remain simple and easily decrypted, that's why I chose to be able to read data only from csv files and send an entire line per message.
 
 In order to receive these data, on the server ```clientingestapp``` is created by the ```mysimbdp-streamingestmanager```, it will subscribe to the same topic than the one where the corresponding customer sends data and it will insert the data in Cassandra.
+
+
+
+
+
+
+
+
+
+
+# Part 3 : Integration and Extension
+
+## Q1
+
+## Q2
+
+For the moment, when the file is too big for batch ingestion, the fetchdata script ignores it at the upload.
+However, it would be interesting to be able to design fetch-data to make it able to split the file into several small files having a size equal to the maximum size allowed for upload and then send these divided files.
+But since the size of a file does not necessarily match the end of a csv line, it is necessary to implement in clientBatchIngestManager or, perhaps more judiciously, in clientBatchIngestApp (which would therefore be the responsibility of the client, so it would be necessary to have his agreement to split the large files during upload) a function allowing to attach the pieces of the large file and then insert the file into the final database. Under these conditions, we avoid the bandwidth to be too overloaded since we do not send the big file but several small files, which is easier to manage.
+
+## Q3
+
+
+
+## Q4
+
+## Q5
+
